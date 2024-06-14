@@ -1,16 +1,37 @@
 "use client";
 
 import { PrismaClient } from "@prisma/client";
+import { useEffect, useState } from "react";
 
 const prisma = new PrismaClient();
 
+type User = {
+  id: number;
+  name: string;
+  email: string;
+};
+
 export default function Home() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [reload, setReload] = useState(false);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const res = await fetch("/api/user");
+      const users = await res.json();
+      setUsers(users);
+    };
+
+    fetchUsers();
+    setReload(false);
+  }, [reload]);
+
   const handleClick = async () => {
-    const response = await fetch("/api/user", {
+    const res = await fetch("/api/user", {
       method: "POST",
     });
-    const user = await response.json();
-    console.log(user);
+    const add_user = await res.json();
+    setReload(true);
   };
 
   return (
@@ -23,6 +44,11 @@ export default function Home() {
         >
           Click me!
         </button>
+        <div className="mt-10">
+          {users.map((user) => (
+            <p key={user.id}>{JSON.stringify(user)}</p>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -36,10 +36,17 @@ export default function HomePage() {
           New user
         </Link>
         {users.map((user) => (
-          <div key={user.id} className="mt-4 flex">
-            <p className="px-2">{user.id}</p>
-            <p className="px-2">{user.name}</p>
-            <p className="px-2">{user.email}</p>
+          <div key={user.id} className="mt-4 flex w-3/5">
+            <p className="px-2 w-1/5">{user.id}</p>
+            <p className="px-2 w-1/5">{user.name}</p>
+            <p className="px-2 w-2/5">{user.email}</p>
+            <Link
+              key={user.id}
+              href={`/user/edit/${user.id}`}
+              className="w-1/5"
+            >
+              [edit]
+            </Link>
           </div>
         ))}
       </div>

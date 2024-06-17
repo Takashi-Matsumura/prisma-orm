@@ -16,6 +16,10 @@ export const POST = async (req: Request, res: NextResponse) => {
 }
 
 export const GET = async (req: Request, res: NextResponse) => {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({
+      orderBy: {
+        id: "asc",
+      },
+    });
     return NextResponse.json(users);
 }

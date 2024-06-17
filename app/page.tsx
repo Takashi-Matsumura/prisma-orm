@@ -14,7 +14,6 @@ type User = {
 
 export default function HomePage() {
   const [users, setUsers] = useState<User[]>([]);
-  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -24,16 +23,7 @@ export default function HomePage() {
     };
 
     fetchUsers();
-    setReload(false);
-  }, [reload]);
-
-  const handleClick = async () => {
-    const res = await fetch("/api/user", {
-      method: "POST",
-    });
-    const add_user = await res.json();
-    setReload(true);
-  };
+  }, []);
 
   return (
     <div className="container mx-auto">
